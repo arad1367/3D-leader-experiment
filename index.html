@@ -119,6 +119,39 @@
         margin-bottom: 20px;
       }
 
+      /* Timer Styles */
+      .timer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+        text-align: center;
+      }
+
+      .timer {
+        font-weight: bold;
+        background-color: #1c87e8;
+        color: white;
+        padding: 6px 15px;
+        border-radius: 4px;
+        margin-top: 5px;
+        font-size: 18px;
+        box-shadow: 0 0 5px #3498db, 0 0 10px #3498db;
+        text-shadow: 0 0 5px #3498db;
+        animation: neon-blue-glow 1.5s ease-in-out infinite alternate;
+      }
+
+      @keyframes neon-blue-glow {
+        from {
+          box-shadow: 0 0 5px #3498db, 0 0 10px #3498db;
+          text-shadow: 0 0 2px #fff, 0 0 5px #3498db;
+        }
+        to {
+          box-shadow: 0 0 10px #3498db, 0 0 20px #3498db, 0 0 30px #3498db;
+          text-shadow: 0 0 5px #fff, 0 0 10px #3498db;
+        }
+      }
+
       /* Interaction Container Styles */
       .interaction-container {
         display: flex;
@@ -177,8 +210,15 @@
       .email-form textarea {
         flex-grow: 1;
         resize: none;
-        min-height: 220px; /* Original email textarea height */
-        max-height: 220px; /* Added max height */
+        min-height: 180px; /* Reduced email textarea height to make room for log */
+        max-height: 180px; /* Reduced email textarea height to make room for log */
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-bottom: 15px;
       }
 
       .email-form button {
@@ -190,11 +230,113 @@
         cursor: pointer;
         font-size: 16px;
         transition: background-color 0.3s;
-        align-self: flex-end;
       }
 
       .email-form button:hover {
         background-color: #2980b9;
+      }
+
+      /* Email Log Styles */
+      .email-log-container {
+        margin-top: 15px;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+      }
+
+      .email-log-title {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #666;
+      }
+
+      .email-log {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 8px;
+        font-size: 12px;
+        height: 80px;
+        overflow-y: auto;
+        margin-bottom: 5px;
+      }
+
+      .email-entry {
+        padding: 5px 0;
+        border-bottom: 1px dotted #ddd;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .email-entry:hover {
+        background-color: #e8f4fc;
+      }
+
+      .email-entry:last-child {
+        border-bottom: none;
+      }
+
+      .email-timestamp {
+        font-weight: bold;
+        color: #3498db;
+      }
+
+      .email-entry.selected {
+        background-color: #e8f4fc;
+        border-left: 3px solid #3498db;
+        padding-left: 5px;
+      }
+
+      /* Transition Page Styles */
+      .transition-page {
+        display: none;
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+      .transition-message {
+        font-size: 20px;
+        margin-bottom: 30px;
+      }
+
+      .transition-timer {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3498db;
+      }
+
+      .loading-animation {
+        display: inline-block;
+        margin-top: 20px;
+      }
+
+      .loading-dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-color: #3498db;
+        border-radius: 50%;
+        margin: 0 5px;
+        animation: loading-bounce 1.4s infinite ease-in-out both;
+      }
+
+      .loading-dot:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+
+      .loading-dot:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+
+      @keyframes loading-bounce {
+        0%,
+        80%,
+        100% {
+          transform: scale(0);
+        }
+        40% {
+          transform: scale(1);
+        }
       }
 
       /* Thank You Section Styles */
@@ -277,7 +419,8 @@
               class="confirm-checkbox"
             />
             <label for="confirmCheckbox1"
-              >I confirm that I have completed the survey above</label
+              >I confirm that I have completed the survey above and pressed
+              "Send"</label
             >
           </div>
           <button class="next-button" id="nextButton1" disabled>
@@ -302,6 +445,14 @@
             to talk to the teammate, but the behavior did not change. You now
             want to complain to the team leader by writing an e-mail.
           </p>
+          <p>
+            <strong>Task duration:</strong> You should spend 7-13 minutes on
+            this task.
+          </p>
+          <div class="timer-container">
+            <span>Time elapsed:</span>
+            <span id="timer" class="timer">0:00</span>
+          </div>
         </div>
 
         <div class="interaction-container">
@@ -330,7 +481,22 @@
                 id="emailBody"
                 placeholder="Compose your email to the team leader here..."
               ></textarea>
-              <button type="button" id="sendEmail">Send Email</button>
+
+              <div class="button-group">
+                <button type="button" id="editEmail" disabled>
+                  Edit Selected
+                </button>
+                <button type="button" id="sendEmail">Send Email</button>
+              </div>
+
+              <div class="email-log-container">
+                <div class="email-log-title">
+                  Email Log (click on an email to select):
+                </div>
+                <div id="emailLog" class="email-log">
+                  <div class="email-entry">No emails sent yet.</div>
+                </div>
+              </div>
             </form>
           </div>
         </div>
@@ -347,9 +513,46 @@
               chatbot</label
             >
           </div>
+          <div class="checkbox-container">
+            <input
+              type="checkbox"
+              id="confirmCheckbox3"
+              class="confirm-checkbox"
+            />
+            <label for="confirmCheckbox3"
+              >I confirm that I have sent the email</label
+            >
+          </div>
           <button class="next-button" id="nextButton2" disabled>
             I Completed Interaction Task
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transition Page -->
+    <div id="transitionPage" class="page">
+      <div class="container">
+        <header>
+          <h1>Time's Up!</h1>
+        </header>
+
+        <div class="transition-message">
+          <p>Your time to interact with the chatbot has ended.</p>
+          <p>
+            Please be patient as we prepare the post-interaction survey for you.
+          </p>
+          <p>
+            You will be automatically redirected in
+            <span id="transitionTimer" class="transition-timer">10</span>
+            seconds.
+          </p>
+
+          <div class="loading-animation">
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -395,6 +598,10 @@
     </footer>
 
     <script>
+      // Store all sent emails
+      const sentEmails = [];
+      let selectedEmailIndex = -1;
+
       // Navigation between pages
       document
         .getElementById("nextButton1")
@@ -402,6 +609,8 @@
           document.getElementById("page1").classList.remove("active");
           document.getElementById("page2").classList.add("active");
           window.scrollTo(0, 0);
+          // Start the timer when moving to page 2
+          startTimer();
         });
 
       document
@@ -410,22 +619,37 @@
           document.getElementById("page2").classList.remove("active");
           document.getElementById("page3").classList.add("active");
           window.scrollTo(0, 0);
+          // Stop the timer when moving to page 3
+          stopTimer();
         });
 
-      // Enable or disable buttons based on checkboxes
+      // Enable or disable buttons based on checkboxes - now requires both checkboxes
       document
         .getElementById("confirmCheckbox1")
         .addEventListener("change", function () {
           document.getElementById("nextButton1").disabled = !this.checked;
         });
 
+      // Update next button state based on both checkboxes
+      function updateNextButtonState() {
+        const chatbotCheckbox =
+          document.getElementById("confirmCheckbox2").checked;
+        const emailCheckbox =
+          document.getElementById("confirmCheckbox3").checked;
+        document.getElementById("nextButton2").disabled = !(
+          chatbotCheckbox && emailCheckbox
+        );
+      }
+
       document
         .getElementById("confirmCheckbox2")
-        .addEventListener("change", function () {
-          document.getElementById("nextButton2").disabled = !this.checked;
-        });
+        .addEventListener("change", updateNextButtonState);
 
-      // Email send simulation
+      document
+        .getElementById("confirmCheckbox3")
+        .addEventListener("change", updateNextButtonState);
+
+      // Email send simulation with logging
       document
         .getElementById("sendEmail")
         .addEventListener("click", function () {
@@ -437,10 +661,144 @@
             return;
           }
 
+          // Add to email log and array
+          const timestamp = new Date().toLocaleTimeString();
+          const emailLog = document.getElementById("emailLog");
+
+          // Store the email data
+          sentEmails.push({
+            timestamp: timestamp,
+            subject: subject,
+            body: body,
+          });
+
+          // Create new email entry
+          const emailEntry = document.createElement("div");
+          emailEntry.className = "email-entry";
+          emailEntry.dataset.index = sentEmails.length - 1; // Store index for reference
+          emailEntry.innerHTML = `<span class="email-timestamp">${timestamp}</span> - Subject: ${subject}`;
+
+          // Add click event to select this email
+          emailEntry.addEventListener("click", function () {
+            // Remove selected class from all entries
+            document.querySelectorAll(".email-entry").forEach((entry) => {
+              entry.classList.remove("selected");
+            });
+
+            // Add selected class to this entry
+            this.classList.add("selected");
+
+            // Get the index from the dataset
+            selectedEmailIndex = parseInt(this.dataset.index);
+
+            // Enable the edit button
+            document.getElementById("editEmail").disabled = false;
+          });
+
+          // Remove "No emails sent yet" message if it exists
+          if (emailLog.innerHTML.includes("No emails sent yet")) {
+            emailLog.innerHTML = "";
+          }
+
+          // Add new email to the log
+          emailLog.appendChild(emailEntry);
+
+          // Scroll to bottom of log
+          emailLog.scrollTop = emailLog.scrollHeight;
+
+          // Clear the form
+          document.getElementById("emailSubject").value = "";
+          document.getElementById("emailBody").value = "";
+
+          // Reset selected email
+          selectedEmailIndex = -1;
+          document.getElementById("editEmail").disabled = true;
+
           alert(
-            "Email drafted successfully! You can continue to interact with the 3D chatbot or proceed to the next step if you are done."
+            "Email sent successfully! You can send another email or proceed to the next step if you are done."
           );
         });
+
+      // Edit selected email
+      document
+        .getElementById("editEmail")
+        .addEventListener("click", function () {
+          if (
+            selectedEmailIndex >= 0 &&
+            selectedEmailIndex < sentEmails.length
+          ) {
+            const email = sentEmails[selectedEmailIndex];
+
+            // Fill the form with selected email data
+            document.getElementById("emailSubject").value = email.subject;
+            document.getElementById("emailBody").value = email.body;
+
+            // Focus on the subject field
+            document.getElementById("emailSubject").focus();
+          }
+        });
+
+      // Timer functionality
+      let timerInterval;
+      let seconds = 0;
+      const timerDisplay = document.getElementById("timer");
+      // Set the time limit for the task (1 minute for testing)
+      const TIME_LIMIT = 60; // 1 minute in seconds
+
+      function startTimer() {
+        // Reset timer
+        seconds = 0;
+        updateTimerDisplay();
+
+        // Start the interval
+        timerInterval = setInterval(function () {
+          seconds++;
+          updateTimerDisplay();
+
+          // Check if time limit reached
+          if (seconds >= TIME_LIMIT) {
+            // Show transition page
+            document.getElementById("page2").classList.remove("active");
+            document.getElementById("transitionPage").classList.add("active");
+            window.scrollTo(0, 0);
+            stopTimer();
+            startTransitionTimer();
+          }
+        }, 1000);
+      }
+
+      function stopTimer() {
+        clearInterval(timerInterval);
+      }
+
+      function updateTimerDisplay() {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        timerDisplay.textContent =
+          minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+      }
+
+      // Transition timer functionality
+      function startTransitionTimer() {
+        let transitionSeconds = 10;
+        const transitionTimerDisplay =
+          document.getElementById("transitionTimer");
+
+        const transitionInterval = setInterval(function () {
+          transitionSeconds--;
+          transitionTimerDisplay.textContent = transitionSeconds;
+
+          if (transitionSeconds <= 0) {
+            clearInterval(transitionInterval);
+            // Move to page 3
+            document
+              .getElementById("transitionPage")
+              .classList.remove("active");
+            document.getElementById("page3").classList.add("active");
+            window.scrollTo(0, 0);
+          }
+        }, 1000);
+      }
     </script>
   </body>
 </html>
