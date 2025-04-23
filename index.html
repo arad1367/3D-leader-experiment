@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3D Leader Experiment</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <style>
       body {
         font-family: "Arial", sans-serif;
@@ -236,6 +236,11 @@
         background-color: #2980b9;
       }
 
+      .email-form button:disabled {
+        background-color: #95a5a6;
+        cursor: not-allowed;
+      }
+
       /* Email Log Styles */
       .email-log-container {
         margin-top: 15px;
@@ -264,7 +269,6 @@
       .email-entry {
         padding: 5px 0;
         border-bottom: 1px dotted #ddd;
-        cursor: pointer;
         transition: background-color 0.2s;
       }
 
@@ -279,12 +283,6 @@
       .email-timestamp {
         font-weight: bold;
         color: #3498db;
-      }
-
-      .email-entry.selected {
-        background-color: #e8f4fc;
-        border-left: 3px solid #3498db;
-        padding-left: 5px;
       }
 
       /* Transition Page Styles */
@@ -483,16 +481,12 @@
               ></textarea>
 
               <div class="button-group">
-                <button type="button" id="editEmail" disabled>
-                  Edit Selected
-                </button>
+                <button type="button" id="undoButton" disabled>Undo</button>
                 <button type="button" id="sendEmail">Send Email</button>
               </div>
 
               <div class="email-log-container">
-                <div class="email-log-title">
-                  Email Log (click on an email to select):
-                </div>
+                <div class="email-log-title">Email Log:</div>
                 <div id="emailLog" class="email-log">
                   <div class="email-entry">No emails sent yet.</div>
                 </div>
@@ -600,7 +594,6 @@
     <script>
       // Store all sent emails
       const sentEmails = [];
-      let selectedEmailIndex = -1;
 
       // Navigation between pages
       document
@@ -675,25 +668,7 @@
           // Create new email entry
           const emailEntry = document.createElement("div");
           emailEntry.className = "email-entry";
-          emailEntry.dataset.index = sentEmails.length - 1; // Store index for reference
           emailEntry.innerHTML = `<span class="email-timestamp">${timestamp}</span> - Subject: ${subject}`;
-
-          // Add click event to select this email
-          emailEntry.addEventListener("click", function () {
-            // Remove selected class from all entries
-            document.querySelectorAll(".email-entry").forEach((entry) => {
-              entry.classList.remove("selected");
-            });
-
-            // Add selected class to this entry
-            this.classList.add("selected");
-
-            // Get the index from the dataset
-            selectedEmailIndex = parseInt(this.dataset.index);
-
-            // Enable the edit button
-            document.getElementById("editEmail").disabled = false;
-          });
 
           // Remove "No emails sent yet" message if it exists
           if (emailLog.innerHTML.includes("No emails sent yet")) {
@@ -710,31 +685,44 @@
           document.getElementById("emailSubject").value = "";
           document.getElementById("emailBody").value = "";
 
-          // Reset selected email
-          selectedEmailIndex = -1;
-          document.getElementById("editEmail").disabled = true;
+          // Enable the undo button after sending a new email
+          document.getElementById("undoButton").disabled = false;
 
           alert(
             "Email sent successfully! You can send another email or proceed to the next step if you are done."
           );
         });
 
-      // Edit selected email
+      // Undo last email functionality
       document
-        .getElementById("editEmail")
+        .getElementById("undoButton")
         .addEventListener("click", function () {
-          if (
-            selectedEmailIndex >= 0 &&
-            selectedEmailIndex < sentEmails.length
-          ) {
-            const email = sentEmails[selectedEmailIndex];
+          if (sentEmails.length > 0) {
+            // Remove the last email from the array
+            const lastEmail = sentEmails.pop();
 
-            // Fill the form with selected email data
-            document.getElementById("emailSubject").value = email.subject;
-            document.getElementById("emailBody").value = email.body;
+            // Update the email log display
+            const emailLog = document.getElementById("emailLog");
 
-            // Focus on the subject field
-            document.getElementById("emailSubject").focus();
+            // If there was only one email, show the "No emails sent yet" message
+            if (sentEmails.length === 0) {
+              emailLog.innerHTML =
+                '<div class="email-entry">No emails sent yet.</div>';
+            } else {
+              // Otherwise, remove the last email entry (last child)
+              emailLog.removeChild(emailLog.lastChild);
+            }
+
+            // Load the last email into the form for editing
+            document.getElementById("emailSubject").value = lastEmail.subject;
+            document.getElementById("emailBody").value = lastEmail.body;
+
+            // Always disable the undo button after using it once
+            document.getElementById("undoButton").disabled = true;
+
+            alert(
+              "Last email has been undone and loaded back into the form for editing."
+            );
           }
         });
 
@@ -743,7 +731,7 @@
       let seconds = 0;
       const timerDisplay = document.getElementById("timer");
       // Set the time limit for the task (1 minute for testing)
-      const TIME_LIMIT = 60; // 1 minute in seconds
+      const TIME_LIMIT = 1200; // 20 minute in seconds
 
       function startTimer() {
         // Reset timer
