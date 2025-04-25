@@ -685,6 +685,15 @@
       document.addEventListener("DOMContentLoaded", function () {
         selectRandomCharacter();
       });
+
+      // Enable or disable button based on checkbox
+      document
+        .getElementById("confirmCheckbox1")
+        .addEventListener("change", function () {
+          document.getElementById("nextButton1").disabled = !this.checked;
+          console.log("Checkbox changed:", this.checked);
+        });
+
       // Store all sent emails
       const sentEmails = [];
 
@@ -746,9 +755,8 @@
             return;
           }
 
-          // Add to email log and array
+          // Add to email array
           const timestamp = new Date().toLocaleTimeString();
-          const emailLog = document.getElementById("emailLog");
 
           // Store the email data
           sentEmails.push({
@@ -757,65 +765,13 @@
             body: body,
           });
 
-          // Create new email entry
-          const emailEntry = document.createElement("div");
-          emailEntry.className = "email-entry";
-          emailEntry.innerHTML = `<span class="email-timestamp">${timestamp}</span> - Subject: ${subject}`;
-
-          // Remove "No emails sent yet" message if it exists
-          if (emailLog.innerHTML.includes("No emails sent yet")) {
-            emailLog.innerHTML = "";
-          }
-
-          // Add new email to the log
-          emailLog.appendChild(emailEntry);
-
-          // Scroll to bottom of log
-          emailLog.scrollTop = emailLog.scrollHeight;
-
           // Clear the form
           document.getElementById("emailSubject").value = "";
           document.getElementById("emailBody").value = "";
 
-          // Enable the undo button after sending a new email
-          document.getElementById("undoButton").disabled = false;
-
           alert(
             "Email sent successfully! You can send another email or proceed to the next step if you are done."
           );
-        });
-
-      // Undo last email functionality
-      document
-        .getElementById("undoButton")
-        .addEventListener("click", function () {
-          if (sentEmails.length > 0) {
-            // Remove the last email from the array
-            const lastEmail = sentEmails.pop();
-
-            // Update the email log display
-            const emailLog = document.getElementById("emailLog");
-
-            // If there was only one email, show the "No emails sent yet" message
-            if (sentEmails.length === 0) {
-              emailLog.innerHTML =
-                '<div class="email-entry">No emails sent yet.</div>';
-            } else {
-              // Otherwise, remove the last email entry (last child)
-              emailLog.removeChild(emailLog.lastChild);
-            }
-
-            // Load the last email into the form for editing
-            document.getElementById("emailSubject").value = lastEmail.subject;
-            document.getElementById("emailBody").value = lastEmail.body;
-
-            // Always disable the undo button after using it once
-            document.getElementById("undoButton").disabled = true;
-
-            alert(
-              "Last email has been undone and loaded back into the form for editing."
-            );
-          }
         });
 
       // Timer functionality
