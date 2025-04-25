@@ -141,6 +141,45 @@
         animation: neon-blue-glow 1.5s ease-in-out infinite alternate;
       }
 
+      /* Add to your existing style section */
+
+      /* Character Page Styles */
+      .character-info {
+        background-color: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        border-left: 5px solid #3498db;
+      }
+
+      .character-info h2 {
+        margin-bottom: 15px;
+        color: #2c3e50;
+      }
+
+      .character-info h3 {
+        margin: 20px 0 10px;
+        color: #3498db;
+      }
+
+      .character-description {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 5px;
+      }
+
+      .ai-info {
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+      }
+
+      #characterTypeDisplay {
+        color: #3498db;
+        font-weight: bold;
+      }
+
       @keyframes neon-blue-glow {
         from {
           box-shadow: 0 0 5px #3498db, 0 0 10px #3498db;
@@ -388,28 +427,10 @@
       <div class="container">
         <header>
           <h1>Exploring 3D Chatbot Interaction: A Research Study</h1>
-          <h2>Pre-Interaction Survey</h2>
         </header>
 
-        <p>
-          Please complete this brief survey before proceeding with the study.
-          Your responses will help us better understand your background and
-          preferences.
-        </p>
-
-        <div class="iframe-container" style="padding-bottom: 110%">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSd79AdTj1ZAtU7k6fYhmBeN2E30jRIr_CnhpALkGU2lG3g6_A/viewform?embedded=true"
-            width="640"
-            height="2018"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
-            >Loading…</iframe
-          >
-        </div>
-
-        <div class="confirmation-box">
+        <!-- MOVED: Confirmation box now above the iframe -->
+        <div class="confirmation-box" style="margin-bottom: 20px">
           <div class="checkbox-container">
             <input
               type="checkbox"
@@ -417,12 +438,66 @@
               class="confirm-checkbox"
             />
             <label for="confirmCheckbox1"
-              >I confirm that I have completed the survey above and pressed
+              >I confirm that I have completed the survey below and pressed
               "Send"</label
             >
           </div>
           <button class="next-button" id="nextButton1" disabled>
             I Completed Pre-Interaction Survey
+          </button>
+        </div>
+
+        <!-- UPDATED: Reduced height of iframe -->
+        <div class="iframe-container" style="padding-bottom: 55%">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSd79AdTj1ZAtU7k6fYhmBeN2E30jRIr_CnhpALkGU2lG3g6_A/viewform?embedded=true"
+            width="640"
+            height="500"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            >Loading…</iframe
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 1.5: Character Assignment Page -->
+    <div id="characterPage" class="page">
+      <div class="container">
+        <header>
+          <h1>Your AI Assistant Experience</h1>
+        </header>
+
+        <div class="character-info">
+          <h2>
+            You will be interacting with a
+            <span id="characterTypeDisplay">Transformational</span> AI Assistant
+          </h2>
+
+          <div class="character-description" id="characterDescription">
+            <!-- This content will be populated by JavaScript -->
+          </div>
+
+          <div class="ai-info">
+            <h3>About Conversational AI</h3>
+            <p>
+              Generative AI assistants can understand natural language and
+              respond in a conversational manner. You can interact with the 3D
+              AI assistant using text input or by using the microphone button
+              for voice input.
+            </p>
+            <p>
+              Feel free to ask questions or discuss the team situation described
+              in your task. The assistant will respond according to its
+              programmed behavior pattern.
+            </p>
+          </div>
+        </div>
+
+        <div class="confirmation-box">
+          <button class="next-button" id="nextButtonCharacter">
+            I Understand - Continue to the Interaction
           </button>
         </div>
       </div>
@@ -470,43 +545,20 @@
                 placeholder="To: team.leader@company.com"
                 readonly
               />
-              <input
-                type="text"
-                placeholder="Subject: Team Collaboration Issue"
-                id="emailSubject"
-              />
+              <input type="text" placeholder="" id="emailSubject" />
               <textarea
                 id="emailBody"
                 placeholder="Compose your email to the team leader here..."
               ></textarea>
 
               <div class="button-group">
-                <button type="button" id="undoButton" disabled>Undo</button>
                 <button type="button" id="sendEmail">Send Email</button>
-              </div>
-
-              <div class="email-log-container">
-                <div class="email-log-title">Email Log:</div>
-                <div id="emailLog" class="email-log">
-                  <div class="email-entry">No emails sent yet.</div>
-                </div>
               </div>
             </form>
           </div>
         </div>
 
         <div class="confirmation-box">
-          <div class="checkbox-container">
-            <input
-              type="checkbox"
-              id="confirmCheckbox2"
-              class="confirm-checkbox"
-            />
-            <label for="confirmCheckbox2"
-              >I confirm that I have completed the interaction with 3D
-              chatbot</label
-            >
-          </div>
           <div class="checkbox-container">
             <input
               type="checkbox"
@@ -592,14 +644,66 @@
     </footer>
 
     <script>
+      // Add at the beginning of your script section
+
+      // Character selection and storage logic
+      let selectedCharacter = "";
+      const characterTypes = [
+        "machiavellian",
+        "narcissistic",
+        "transformational",
+        "servant",
+      ];
+      const characterDescriptions = {
+        machiavellian:
+          "This AI assistant operates with a strategic mindset. It tends to prioritize practical outcomes and may suggest approaches that focus on achieving goals efficiently.",
+        narcissistic:
+          "This AI assistant has a confident communication style. It often focuses on achievements and results, and may appear self-assured in its recommendations.",
+        transformational:
+          "This AI assistant aims to inspire and motivate. It tends to focus on positive change and growth, encouraging new perspectives and innovative approaches.",
+        servant:
+          "This AI assistant prioritizes being helpful and supportive. It focuses on addressing your needs and concerns, putting your interests first in the interaction.",
+      };
+
+      // Randomly select a character when the page loads
+      function selectRandomCharacter() {
+        const randomIndex = Math.floor(Math.random() * characterTypes.length);
+        selectedCharacter = characterTypes[randomIndex];
+        localStorage.setItem("selectedCharacter", selectedCharacter);
+
+        // Update the display on the character page
+        document.getElementById("characterTypeDisplay").textContent =
+          selectedCharacter.charAt(0).toUpperCase() +
+          selectedCharacter.slice(1);
+        document.getElementById("characterDescription").textContent =
+          characterDescriptions[selectedCharacter];
+
+        console.log("Randomly selected character:", selectedCharacter);
+      }
+
+      // Call this when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        selectRandomCharacter();
+      });
       // Store all sent emails
       const sentEmails = [];
+
+      // Navigation between pages
+      // Replace the existing navigation code with this
 
       // Navigation between pages
       document
         .getElementById("nextButton1")
         .addEventListener("click", function () {
           document.getElementById("page1").classList.remove("active");
+          document.getElementById("characterPage").classList.add("active");
+          window.scrollTo(0, 0);
+        });
+
+      document
+        .getElementById("nextButtonCharacter")
+        .addEventListener("click", function () {
+          document.getElementById("characterPage").classList.remove("active");
           document.getElementById("page2").classList.add("active");
           window.scrollTo(0, 0);
           // Start the timer when moving to page 2
@@ -616,28 +720,16 @@
           stopTimer();
         });
 
-      // Enable or disable buttons based on checkboxes - now requires both checkboxes
-      document
-        .getElementById("confirmCheckbox1")
-        .addEventListener("change", function () {
-          document.getElementById("nextButton1").disabled = !this.checked;
-        });
-
       // Update next button state based on both checkboxes
+      // Update the next button state function
       function updateNextButtonState() {
-        const chatbotCheckbox =
-          document.getElementById("confirmCheckbox2").checked;
+        // We've removed the confirmCheckbox2, so we only need to check confirmCheckbox3
         const emailCheckbox =
           document.getElementById("confirmCheckbox3").checked;
-        document.getElementById("nextButton2").disabled = !(
-          chatbotCheckbox && emailCheckbox
-        );
+        document.getElementById("nextButton2").disabled = !emailCheckbox;
       }
 
-      document
-        .getElementById("confirmCheckbox2")
-        .addEventListener("change", updateNextButtonState);
-
+      // Update the event listener
       document
         .getElementById("confirmCheckbox3")
         .addEventListener("change", updateNextButtonState);
@@ -787,6 +879,50 @@
           }
         }, 1000);
       }
+    </script>
+    <script>
+      // Add this script to communicate with the chatbot iframe
+      window.addEventListener("message", function (event) {
+        // Receive messages from the iframe if needed
+        console.log("Received message from iframe:", event.data);
+      });
+
+      // Function to send the selected character to the iframe when page2 becomes active
+      function sendCharacterToIframe() {
+        const character =
+          localStorage.getItem("selectedCharacter") || "default";
+        const chatbotIframe = document.querySelector(
+          ".chatbot-container iframe"
+        );
+
+        if (chatbotIframe && chatbotIframe.contentWindow) {
+          setTimeout(() => {
+            chatbotIframe.contentWindow.postMessage(
+              {
+                type: "setCharacter",
+                character: character,
+              },
+              "*"
+            );
+            console.log("Sent character to iframe:", character);
+          }, 1000); // Give iframe time to load
+        }
+      }
+
+      // Listen for page2 becoming active
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.attributeName === "class") {
+            const page2 = document.getElementById("page2");
+            if (page2.classList.contains("active")) {
+              sendCharacterToIframe();
+            }
+          }
+        });
+      });
+
+      const page2 = document.getElementById("page2");
+      observer.observe(page2, { attributes: true });
     </script>
   </body>
 </html>
