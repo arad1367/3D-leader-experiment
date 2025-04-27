@@ -425,34 +425,43 @@
     <!-- Page 1: Pre-Interaction Survey -->
     <div id="page1" class="page active">
       <div class="container">
-        <header>
-          <h1>Exploring 3D Chatbot Interaction: A Research Study</h1>
+        <header style="margin-bottom: 10px">
+          <h1 style="margin-bottom: 0; font-size: 24px">
+            Exploring 3D Chatbot Interaction: A Research Study
+          </h1>
         </header>
 
         <!-- MOVED: Confirmation box now above the iframe -->
-        <div class="confirmation-box" style="margin-bottom: 20px">
-          <div class="checkbox-container">
+        <!-- Make the confirmation box more compact -->
+        <div class="confirmation-box" style="margin-bottom: 10px; padding: 8px">
+          <div class="checkbox-container" style="margin-bottom: 6px">
             <input
               type="checkbox"
               id="confirmCheckbox1"
               class="confirm-checkbox"
             />
-            <label for="confirmCheckbox1"
+            <label for="confirmCheckbox1" style="font-size: 14px"
               >I confirm that I have completed the survey below and pressed
               "Send"</label
             >
           </div>
-          <button class="next-button" id="nextButton1" disabled>
+          <button
+            class="next-button"
+            id="nextButton1"
+            disabled
+            style="padding: 6px 15px; font-size: 14px"
+          >
             I Completed Pre-Interaction Survey
           </button>
         </div>
 
         <!-- UPDATED: Reduced height of iframe -->
-        <div class="iframe-container" style="padding-bottom: 55%">
+        <!-- UPDATED: Further reduced height of iframe -->
+        <div class="iframe-container" style="padding-bottom: 28%">
           <iframe
             id="googleFormIframe"
             width="640"
-            height="500"
+            height="400"
             frameborder="0"
             marginheight="0"
             marginwidth="0"
@@ -544,8 +553,9 @@
                 type="text"
                 placeholder="To: team.leader@company.com"
                 readonly
+                style="background-color: #f0f0f0; cursor: not-allowed"
               />
-              <input type="text" placeholder="" id="emailSubject" />
+              <input type="text" placeholder="Subject:" id="emailSubject" />
               <textarea
                 id="emailBody"
                 placeholder="Compose your email to the team leader here..."
@@ -606,29 +616,18 @@
     <!-- Page 3: Post-Interaction Survey -->
     <div id="page3" class="page">
       <div class="container">
-        <header>
-          <h1>Exploring 3D Chatbot Interaction: A Research Study</h1>
-          <h2>Post-Interaction Survey</h2>
+        <!-- Reduce spacing around the header -->
+        <header style="margin-bottom: 10px">
+          <h1 style="margin-bottom: 0; font-size: 24px">
+            Exploring 3D Chatbot Interaction: A Research Study
+          </h1>
         </header>
 
-        <div class="thank-you">
-          <h2>Thank You for Your Participation!</h2>
-          <p>
-            Your contribution to this research is greatly appreciated. Please
-            complete the final survey below to share your experience.
-          </p>
-        </div>
-
-        <p>
-          Please take a moment to complete this post-interaction survey. Your
-          feedback is invaluable to our research.
-        </p>
-
-        <div class="iframe-container" style="padding-bottom: 200%">
+        <div class="iframe-container" style="padding-bottom: 35%">
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLScWfGZ5CS7AuzfpKN_s5WRiU8pC3BQwD0uB98qOBEjyG0Jt1w/viewform?embedded=true"
             width="640"
-            height="4469"
+            height="400"
             frameborder="0"
             marginheight="0"
             marginwidth="0"
@@ -639,7 +638,7 @@
     </div>
 
     <footer>
-      &copy; 2025 3D Leader Experiment by Leona Chandra, Isabella Seeber,
+      &copy; 2025 3D AI Assistant Experiment by Leona Chandra, Isabella Seeber,
       Johannes Schneider, and Pejman Ebrahimi - All Rights Reserved
     </footer>
 
@@ -736,17 +735,15 @@
         const character =
           localStorage.getItem("selectedCharacter") || selectedCharacter;
 
-        // Base URL of your Google Form
+        // PrettyForm URL
         const baseFormUrl =
-          "https://docs.google.com/forms/d/e/1FAIpQLSd79AdTj1ZAtU7k6fYhmBeN2E30jRIr_CnhpALkGU2lG3g6_A/viewform";
+          "https://prettyform.addxt.com/a/form/vf/1FAIpQLSd79AdTj1ZAtU7k6fYhmBeN2E30jRIr_CnhpALkGU2lG3g6_A";
 
-        // Your actual entry ID from the pre-filled link
-        const entryId = "1049424001";
-
-        // Create the prefilled URL
-        const prefilledUrl = `${baseFormUrl}?usp=pp_url&entry.${entryId}=${encodeURIComponent(
+        // Create the URL with character parameter
+        // Assuming PrettyForm uses the same parameter structure, modify if needed
+        const prefilledUrl = `${baseFormUrl}?entry.1049424001=${encodeURIComponent(
           character
-        )}&embedded=true`;
+        )}`;
 
         // Update the iframe src
         const formIframe = document.getElementById("googleFormIframe");
