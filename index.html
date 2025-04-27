@@ -474,29 +474,37 @@
     <!-- Page 1.5: Character Assignment Page -->
     <div id="characterPage" class="page">
       <div class="container">
-        <header>
-          <h1>Your AI Assistant Experience</h1>
+        <header style="margin-bottom: 10px">
+          <h1 style="margin-bottom: 0; font-size: 24px">
+            Your AI Assistant Experience
+          </h1>
         </header>
 
-        <div class="character-info">
-          <h2>
+        <div class="character-info" style="padding: 15px; margin-bottom: 15px">
+          <h2 style="margin-bottom: 10px; font-size: 20px">
             You will be interacting with a
             <span id="characterTypeDisplay">Transformational</span> AI Assistant
           </h2>
 
-          <div class="character-description" id="characterDescription">
+          <div
+            class="character-description"
+            id="characterDescription"
+            style="margin-bottom: 15px; padding: 10px"
+          >
             <!-- This content will be populated by JavaScript -->
           </div>
 
-          <div class="ai-info">
-            <h3>About Conversational AI</h3>
-            <p>
+          <div class="ai-info" style="margin-top: 15px; padding-top: 10px">
+            <h3 style="margin-bottom: 5px; font-size: 16px">
+              About Conversational AI
+            </h3>
+            <p style="margin-bottom: 10px; font-size: 14px">
               Generative AI assistants can understand natural language and
               respond in a conversational manner. You can interact with the 3D
               AI assistant using text input or by using the microphone button
               for voice input.
             </p>
-            <p>
+            <p style="margin-bottom: 10px; font-size: 14px">
               Feel free to ask questions or discuss the team situation described
               in your task. The assistant will respond according to its
               programmed behavior pattern.
@@ -504,8 +512,12 @@
           </div>
         </div>
 
-        <div class="confirmation-box">
-          <button class="next-button" id="nextButtonCharacter">
+        <div class="confirmation-box" style="padding: 8px; margin-top: 10px">
+          <button
+            class="next-button"
+            id="nextButtonCharacter"
+            style="padding: 6px 15px; font-size: 14px"
+          >
             I Understand - Continue to the Interaction
           </button>
         </div>
@@ -655,13 +667,13 @@
       ];
       const characterDescriptions = {
         machiavellian:
-          "This AI assistant operates with a strategic mindset. It tends to prioritize practical outcomes and may suggest approaches that focus on achieving goals efficiently.",
+          "This assistant has a machiavellian leadership style, meaning the assistant shows strategic manipulativeness, a focus on maintaining power, and a pragmatic approach to ethics. The assistant is interested in achieving goals through any effective means necessary.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the machiavellian style to life. They change depending on the response, making the machiavellian style even more vivid and noticeable for you.",
         narcissistic:
-          "This AI assistant has a confident communication style. It often focuses on achievements and results, and may appear self-assured in its recommendations.",
+          "The assistant has a narcissistic leadership style, meaning the assistant shows strong signs of grandiosity, craves admiration, and lacks empathy. The assistant is mainly interested in itself, sometimes at the expense of others.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the narcissistic style to life. They change depending on the response, making the narcissistic style even more vivid and noticeable for you.",
         transformational:
-          "This AI assistant aims to inspire and motivate. It tends to focus on positive change and growth, encouraging new perspectives and innovative approaches.",
+          "This assistant has a transformational leadership style, meaning the assistant shows modesty, a focus on others' needs, and a strong sense of empathy. The assistant is genuinely interested in empowering others to grow and perform better.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the transformational style to life. They change depending on the response, making the transformational style even more vivid and noticeable for you.",
         servant:
-          "This AI assistant prioritizes being helpful and supportive. It focuses on addressing your needs and concerns, putting your interests first in the interaction.",
+          "This assistant has a servant leadership style, meaning the assistant shows modesty, a focus on others' needs, and a strong sense of empathy. The assistant is genuinely interested in empowering others to grow and perform better.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the servant style to life. They change depending on the response, making the servant style even more vivid and noticeable for you.",
       };
 
       // Randomly select a character when the page loads
@@ -674,8 +686,8 @@
         document.getElementById("characterTypeDisplay").textContent =
           selectedCharacter.charAt(0).toUpperCase() +
           selectedCharacter.slice(1);
-        document.getElementById("characterDescription").textContent =
-          characterDescriptions[selectedCharacter];
+        document.getElementById("characterDescription").innerHTML =
+          characterDescriptions[selectedCharacter].replace(/\n/g, "<br>");
 
         console.log("Randomly selected character:", selectedCharacter);
       }
