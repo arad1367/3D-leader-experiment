@@ -6,6 +6,22 @@
     <title>3D Leader Experiment</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <style>
+      /* ===== VARIABLES ===== */
+      :root {
+        --primary-color: #3498db;
+        --primary-dark: #2980b9;
+        --secondary-color: #2c3e50;
+        --light-bg: rgba(255, 255, 255, 0.85);
+        --border-radius: 10px;
+        --box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        --transition: all 0.3s ease;
+        --neon-yellow: #ffff00;
+        --disabled-color: #95a5a6;
+        --border-color: #dee2e6;
+        --light-gray: #f8f9fa;
+      }
+
+      /* ===== BASE STYLES ===== */
       body {
         font-family: "Arial", sans-serif;
         margin: 0;
@@ -16,6 +32,7 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        line-height: 1.6;
       }
 
       .container {
@@ -23,38 +40,44 @@
         max-width: 1200px;
         margin: 30px auto;
         padding: 20px;
-        background-color: rgba(255, 255, 255, 0.85);
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        background-color: var(--light-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
       }
 
+      /* ===== TYPOGRAPHY ===== */
+      h1 {
+        color: var(--secondary-color);
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      h2 {
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+
+      p {
+        margin-bottom: 20px;
+      }
+
+      /* ===== HEADER ===== */
       header {
         text-align: center;
         margin-bottom: 30px;
       }
 
-      h1 {
-        color: #2c3e50;
-        margin-bottom: 10px;
-      }
-
-      h2 {
-        color: #3498db;
-        margin-bottom: 20px;
-      }
-
-      p {
-        line-height: 1.6;
-        margin-bottom: 20px;
-      }
-
+      /* ===== IFRAME CONTAINER ===== */
       .iframe-container {
         position: relative;
         width: 90%;
         height: 0;
-        padding-bottom: 70%; /* Reduced padding for less white space */
+        padding-bottom: 70%;
         overflow: hidden;
         margin: 0 auto 30px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       }
 
       .iframe-container iframe {
@@ -64,18 +87,21 @@
         width: 100%;
         height: 100%;
         border: none;
+        border-radius: 8px;
       }
 
+      /* ===== CONFIRMATION BOX ===== */
       .confirmation-box {
-        background-color: #f8f9fa;
+        background-color: var(--light-gray);
         padding: 20px;
         border-radius: 5px;
-        border: 1px solid #dee2e6;
+        border: 1px solid var(--border-color);
         margin-top: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
+        transition: var(--transition);
       }
 
       .checkbox-container {
@@ -88,38 +114,78 @@
         margin-right: 10px;
         width: 20px;
         height: 20px;
+        cursor: pointer;
       }
 
+      /* ===== WARNING MESSAGE ===== */
+      .warning-message {
+        background-color: #ffdddd;
+        border: 2px solid #ff0000;
+        color: #990000;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+        text-align: center;
+        font-weight: bold;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        animation: pulse-warning 1.5s infinite alternate;
+      }
+
+      @keyframes pulse-warning {
+        from {
+          box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+          transform: scale(1);
+        }
+        to {
+          box-shadow: 0 0 20px rgba(255, 0, 0, 0.8),
+            0 0 30px rgba(255, 0, 0, 0.4);
+          transform: scale(1.02);
+        }
+      }
+
+      /* ===== BUTTONS ===== */
       .next-button {
-        background-color: #3498db;
+        background-color: var(--primary-color);
         color: white;
         border: none;
         padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
         font-size: 16px;
-        transition: background-color 0.3s;
+        transition: var(--transition);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
       }
 
       .next-button:hover {
-        background-color: #2980b9;
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+      }
+
+      .next-button:active {
+        transform: translateY(0);
       }
 
       .next-button:disabled {
-        background-color: #95a5a6;
+        background-color: var(--disabled-color);
         cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
       }
 
-      /* Task Description Styles */
+      /* ===== TASK DESCRIPTION ===== */
       .task-description {
-        background-color: #f8f9fa;
+        background-color: var(--light-gray);
         padding: 15px;
         border-radius: 5px;
-        border-left: 5px solid #3498db;
+        border-left: 5px solid var(--primary-color);
         margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
       }
 
-      /* Timer Styles */
+      /* ===== TIMER ===== */
       .timer-container {
         display: flex;
         flex-direction: column;
@@ -130,36 +196,35 @@
 
       .timer {
         font-weight: bold;
-        background-color: #1c87e8;
+        background-color: var(--primary-color);
         color: white;
         padding: 6px 15px;
         border-radius: 4px;
         margin-top: 5px;
         font-size: 18px;
-        box-shadow: 0 0 5px #3498db, 0 0 10px #3498db;
-        text-shadow: 0 0 5px #3498db;
+        box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+        text-shadow: 0 0 5px var(--primary-color);
         animation: neon-blue-glow 1.5s ease-in-out infinite alternate;
       }
 
-      /* Add to your existing style section */
-
-      /* Character Page Styles */
+      /* ===== CHARACTER PAGE ===== */
       .character-info {
-        background-color: #f8f9fa;
+        background-color: var(--light-gray);
         padding: 25px;
         border-radius: 10px;
         margin-bottom: 30px;
-        border-left: 5px solid #3498db;
+        border-left: 5px solid var(--primary-color);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
       }
 
       .character-info h2 {
         margin-bottom: 15px;
-        color: #2c3e50;
+        color: var(--secondary-color);
       }
 
       .character-info h3 {
         margin: 20px 0 10px;
-        color: #3498db;
+        color: var(--primary-color);
       }
 
       .character-description {
@@ -167,6 +232,7 @@
         padding: 15px;
         background-color: rgba(255, 255, 255, 0.7);
         border-radius: 5px;
+        border: 1px solid rgba(52, 152, 219, 0.2);
       }
 
       .ai-info {
@@ -176,22 +242,25 @@
       }
 
       #characterTypeDisplay {
-        color: #3498db;
+        color: var(--primary-color);
         font-weight: bold;
       }
 
+      /* ===== ANIMATIONS ===== */
       @keyframes neon-blue-glow {
         from {
-          box-shadow: 0 0 5px #3498db, 0 0 10px #3498db;
-          text-shadow: 0 0 2px #fff, 0 0 5px #3498db;
+          box-shadow: 0 0 5px var(--primary-color),
+            0 0 10px var(--primary-color);
+          text-shadow: 0 0 2px #fff, 0 0 5px var(--primary-color);
         }
         to {
-          box-shadow: 0 0 10px #3498db, 0 0 20px #3498db, 0 0 30px #3498db;
-          text-shadow: 0 0 5px #fff, 0 0 10px #3498db;
+          box-shadow: 0 0 10px var(--primary-color),
+            0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+          text-shadow: 0 0 5px #fff, 0 0 10px var(--primary-color);
         }
       }
 
-      /* Interaction Container Styles */
+      /* ===== INTERACTION CONTAINER ===== */
       .interaction-container {
         display: flex;
         flex-direction: row;
@@ -208,10 +277,11 @@
       .chatbot-container,
       .email-container {
         flex: 1;
-        border-radius: 5px;
+        border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        height: 600px; /* Reduced height to match the email container */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        height: 600px;
+        transition: var(--transition);
       }
 
       .chatbot-container {
@@ -231,6 +301,7 @@
         flex-direction: column;
       }
 
+      /* ===== EMAIL FORM ===== */
       .email-form {
         display: flex;
         flex-direction: column;
@@ -239,18 +310,26 @@
 
       .email-form input,
       .email-form textarea {
-        padding: 10px;
+        padding: 12px;
         margin-bottom: 15px;
         border: 1px solid #ddd;
-        border-radius: 4px;
+        border-radius: 6px;
         font-family: "Arial", sans-serif;
+        transition: var(--transition);
+      }
+
+      .email-form input:focus,
+      .email-form textarea:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        outline: none;
       }
 
       .email-form textarea {
         flex-grow: 1;
         resize: none;
-        min-height: 180px; /* Reduced email textarea height to make room for log */
-        max-height: 180px; /* Reduced email textarea height to make room for log */
+        min-height: 180px;
+        max-height: 180px;
       }
 
       .button-group {
@@ -261,26 +340,34 @@
       }
 
       .email-form button {
-        background-color: #3498db;
+        background-color: var(--primary-color);
         color: white;
         border: none;
-        padding: 10px;
-        border-radius: 4px;
+        padding: 10px 15px;
+        border-radius: 6px;
         cursor: pointer;
         font-size: 16px;
-        transition: background-color 0.3s;
+        transition: var(--transition);
+        font-weight: 600;
+        box-shadow: 0 2px 5px rgba(52, 152, 219, 0.2);
       }
 
       .email-form button:hover {
-        background-color: #2980b9;
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+      }
+
+      .email-form button:active {
+        transform: translateY(0);
       }
 
       .email-form button:disabled {
-        background-color: #95a5a6;
+        background-color: var(--disabled-color);
         cursor: not-allowed;
       }
 
-      /* Email Log Styles */
+      /* ===== EMAIL LOG ===== */
       .email-log-container {
         margin-top: 15px;
         border-top: 1px solid #ddd;
@@ -297,7 +384,7 @@
       .email-log {
         background-color: #f9f9f9;
         border: 1px solid #ddd;
-        border-radius: 4px;
+        border-radius: 6px;
         padding: 8px;
         font-size: 12px;
         height: 80px;
@@ -321,10 +408,10 @@
 
       .email-timestamp {
         font-weight: bold;
-        color: #3498db;
+        color: var(--primary-color);
       }
 
-      /* Transition Page Styles */
+      /* ===== TRANSITION PAGE ===== */
       .transition-page {
         display: none;
         text-align: center;
@@ -339,7 +426,7 @@
       .transition-timer {
         font-size: 24px;
         font-weight: bold;
-        color: #3498db;
+        color: var(--primary-color);
       }
 
       .loading-animation {
@@ -351,7 +438,7 @@
         display: inline-block;
         width: 12px;
         height: 12px;
-        background-color: #3498db;
+        background-color: var(--primary-color);
         border-radius: 50%;
         margin: 0 5px;
         animation: loading-bounce 1.4s infinite ease-in-out both;
@@ -376,54 +463,88 @@
         }
       }
 
-      /* Thank You Section Styles */
+      /* ===== THANK YOU SECTION ===== */
       .thank-you {
         text-align: center;
         margin: 40px 0;
         padding: 20px;
         background-color: #e8f4fc;
         border-radius: 5px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
       }
 
       .thank-you h2 {
-        color: #2c3e50;
+        color: var(--secondary-color);
       }
 
+      /* ===== FOOTER ===== */
       footer {
         text-align: center;
         padding: 20px;
         margin-top: 30px;
-        color: #ffff00; /* Neon yellow color */
+        color: var(--neon-yellow);
         font-size: 14px;
-        text-shadow: 0 0 5px #ffff00, 0 0 10px #ffff00, 0 0 15px #ffff00,
-          0 0 20px #ffff00;
+        text-shadow: 0 0 5px var(--neon-yellow), 0 0 10px var(--neon-yellow),
+          0 0 15px var(--neon-yellow), 0 0 20px var(--neon-yellow);
         font-weight: bold;
         animation: neon-glow 1.5s ease-in-out infinite alternate;
       }
 
       @keyframes neon-glow {
         from {
-          text-shadow: 0 0 5px #ffff00, 0 0 10px #ffff00, 0 0 15px #ffff00;
+          text-shadow: 0 0 5px var(--neon-yellow), 0 0 10px var(--neon-yellow),
+            0 0 15px var(--neon-yellow);
         }
         to {
-          text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 30px #ffff00;
+          text-shadow: 0 0 10px var(--neon-yellow), 0 0 20px var(--neon-yellow),
+            0 0 30px var(--neon-yellow);
         }
       }
 
-      /* Hide pages by default */
+      /* ===== PAGE VISIBILITY ===== */
       .page {
         display: none;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
       }
 
-      /* Show active page */
       .page.active {
         display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ===== PROLIFIC ID PAGE ===== */
+      #prolificIdInput {
+        padding: 12px;
+        width: 80%;
+        max-width: 400px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        transition: var(--transition);
+        margin: 20px auto;
+        display: block;
+      }
+
+      #prolificIdInput:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        outline: none;
+      }
+
+      #prolificIdError {
+        color: #e74c3c;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 5px;
       }
     </style>
   </head>
   <body>
-    <!-- Page 1: Pre-Interaction Survey -->
-    <div id="page1" class="page active">
+    <!-- Page 0: Prolific ID Page -->
+    <div id="prolificIdPage" class="page active">
       <div class="container">
         <header style="margin-bottom: 10px">
           <h1 style="margin-bottom: 0; font-size: 24px">
@@ -431,32 +552,61 @@
           </h1>
         </header>
 
-        <!-- MOVED: Confirmation box now above the iframe -->
-        <!-- Make the confirmation box more compact -->
-        <div class="confirmation-box" style="margin-bottom: 10px; padding: 8px">
-          <div class="checkbox-container" style="margin-bottom: 6px">
+        <div class="character-info" style="padding: 15px; margin-bottom: 15px">
+          <h2 style="margin-bottom: 10px; font-size: 20px">
+            Please enter your Prolific ID
+          </h2>
+
+          <div style="margin: 20px 0; text-align: center">
             <input
-              type="checkbox"
-              id="confirmCheckbox1"
-              class="confirm-checkbox"
+              type="text"
+              id="prolificIdInput"
+              placeholder="Enter your Prolific ID"
             />
-            <label for="confirmCheckbox1" style="font-size: 14px"
-              >I confirm that I have completed the survey below and pressed
-              "Send"</label
-            >
           </div>
+
+          <p style="color: red; display: none" id="prolificIdError">
+            Please enter your Prolific ID before continuing
+          </p>
+        </div>
+
+        <div class="confirmation-box" style="padding: 8px; margin-top: 10px">
+          <button
+            class="next-button"
+            id="prolificIdNextButton"
+            style="padding: 6px 15px; font-size: 14px"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Page 1: Pre-Interaction Survey -->
+    <div id="page1" class="page">
+      <div class="container">
+        <header style="margin-bottom: 10px">
+          <h1 style="margin-bottom: 0; font-size: 24px">
+            Exploring 3D Chatbot Interaction: A Research Study
+          </h1>
+        </header>
+
+        <!-- REPLACED: Warning message instead of checkbox -->
+        <div class="warning-message" id="preWarningMessage">
+          Please ensure that you have clicked the "Submit" button on the Google
+          Form. Once submitted, you may then click the button below.
+        </div>
+        <div class="confirmation-box" style="margin-bottom: 10px; padding: 8px">
           <button
             class="next-button"
             id="nextButton1"
-            disabled
             style="padding: 6px 15px; font-size: 14px"
           >
-            I Completed Pre-Interaction Survey
+            I Completed Pre-Interaction Survey and clicked the "Submit" button
+            of google form.
           </button>
         </div>
 
         <!-- UPDATED: Reduced height of iframe -->
-        <!-- UPDATED: Further reduced height of iframe -->
         <div class="iframe-container" style="padding-bottom: 28%">
           <iframe
             id="googleFormIframe"
@@ -635,9 +785,15 @@
           </h1>
         </header>
 
+        <!-- ADDED: Warning message for post-interaction survey -->
+        <div class="warning-message" id="postWarningMessage">
+          Please ensure that you have clicked the "Submit" button on the Below
+          Google Form before completing this experiment.
+        </div>
+
         <div class="iframe-container" style="padding-bottom: 35%">
           <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLScWfGZ5CS7AuzfpKN_s5WRiU8pC3BQwD0uB98qOBEjyG0Jt1w/viewform?embedded=true"
+            id="postInteractionFormIframe"
             width="640"
             height="400"
             frameborder="0"
@@ -656,27 +812,86 @@
 
     <script>
       // Add at the beginning of your script section
+      // Prolific ID handling
+      let prolificId = "";
 
       // Character selection and storage logic
       let selectedCharacter = "";
-      const characterTypes = [
-        "machiavellian",
-        "narcissistic",
-        "transformational",
-        "servant",
-      ];
+      const characterTypes = ["darkAgent", "transformational"];
       const characterDescriptions = {
-        machiavellian:
-          "This assistant has a machiavellian leadership style, meaning the assistant shows strategic manipulativeness, a focus on maintaining power, and a pragmatic approach to ethics. The assistant is interested in achieving goals through any effective means necessary.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the machiavellian style to life. They change depending on the response, making the machiavellian style even more vivid and noticeable for you.",
-        narcissistic:
-          "The assistant has a narcissistic leadership style, meaning the assistant shows strong signs of grandiosity, craves admiration, and lacks empathy. The assistant is mainly interested in itself, sometimes at the expense of others.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the narcissistic style to life. They change depending on the response, making the narcissistic style even more vivid and noticeable for you.",
+        darkAgent:
+          "This assistant has a dark leadership style, showing narcissistic and machiavellian traits. The assistant displays grandiosity, craves admiration, and lacks empathy. The assistant is mainly interested in itself, sometimes at the expense of others.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the dark style to life. They change depending on the response, making the dark style even more vivid and noticeable for you.",
+
         transformational:
           "This assistant has a transformational leadership style, meaning the assistant shows modesty, a focus on others' needs, and a strong sense of empathy. The assistant is genuinely interested in empowering others to grow and perform better.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the transformational style to life. They change depending on the response, making the transformational style even more vivid and noticeable for you.",
-        servant:
-          "This assistant has a servant leadership style, meaning the assistant shows modesty, a focus on others' needs, and a strong sense of empathy. The assistant is genuinely interested in empowering others to grow and perform better.\nThe assistant uses automatic voice and text recognition to understand what you say. Complex algorithms then analyze your message and generate a response.\nThe assistant's facial expressions, gestures, and outfit are carefully designed to bring the servant style to life. They change depending on the response, making the servant style even more vivid and noticeable for you.",
       };
 
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if we already have a Prolific ID stored
+        const storedProlificId = localStorage.getItem("prolificId");
+        if (storedProlificId) {
+          prolificId = storedProlificId;
+          document.getElementById("prolificIdInput").value = prolificId;
+        }
+
+        // Handle Prolific ID submission
+        document
+          .getElementById("prolificIdNextButton")
+          .addEventListener("click", function () {
+            const inputValue = document
+              .getElementById("prolificIdInput")
+              .value.trim();
+
+            if (!inputValue) {
+              document.getElementById("prolificIdError").style.display =
+                "block";
+              return;
+            }
+
+            // Store the Prolific ID
+            prolificId = inputValue;
+            localStorage.setItem("prolificId", prolificId);
+
+            // Hide error message if it was shown
+            document.getElementById("prolificIdError").style.display = "none";
+
+            // Move to the pre-interaction survey page
+            document
+              .getElementById("prolificIdPage")
+              .classList.remove("active");
+            document.getElementById("page1").classList.add("active");
+            window.scrollTo(0, 0);
+
+            // Update the form URLs with the Prolific ID
+            updateFormUrls();
+          });
+      });
+
+      // Function to update form URLs with Prolific ID
+      function updateFormUrls() {
+        // Pre-interaction form
+        const preFormBaseUrl =
+          "https://prettyform.addxt.com/a/form/vf/1FAIpQLSd79AdTj1ZAtU7k6fYhmBeN2E30jRIr_CnhpALkGU2lG3g6_A";
+        const preFormUrl = `${preFormBaseUrl}?entry.1697395021=${encodeURIComponent(
+          prolificId
+        )}&entry.1049424001=${encodeURIComponent(selectedCharacter || "")}`;
+
+        // Post-interaction form
+        const postFormBaseUrl =
+          "https://prettyform.addxt.com/a/form/vf/1FAIpQLScWfGZ5CS7AuzfpKN_s5WRiU8pC3BQwD0uB98qOBEjyG0Jt1w";
+        const postFormUrl = `${postFormBaseUrl}?entry.1638093500=${encodeURIComponent(
+          prolificId
+        )}`;
+
+        // Update the iframe sources
+        document.getElementById("googleFormIframe").src = preFormUrl;
+        document.getElementById("postInteractionFormIframe").src = postFormUrl;
+
+        console.log("Updated form URLs with Prolific ID:", prolificId);
+      }
+
       // Randomly select a character when the page loads
+      // Function to select a random character
       function selectRandomCharacter() {
         const randomIndex = Math.floor(Math.random() * characterTypes.length);
         selectedCharacter = characterTypes[randomIndex];
@@ -690,27 +905,21 @@
           characterDescriptions[selectedCharacter].replace(/\n/g, "<br>");
 
         console.log("Randomly selected character:", selectedCharacter);
-      }
 
+        // Update the form URLs with the selected character and Prolific ID
+        updateFormUrls();
+      }
       // Call this when the page loads
       document.addEventListener("DOMContentLoaded", function () {
         selectRandomCharacter();
         updateGoogleFormUrl();
 
-        // Enable or disable button based on checkbox
-        document
-          .getElementById("confirmCheckbox1")
-          .addEventListener("change", function () {
-            document.getElementById("nextButton1").disabled = !this.checked;
-            console.log("Checkbox changed:", this.checked);
-          });
+        // No need to disable the button since we removed the checkbox
+        document.getElementById("nextButton1").disabled = false;
       });
 
       // Store all sent emails
       const sentEmails = [];
-
-      // Navigation between pages
-      // Replace the existing navigation code with this
 
       // Navigation between pages
       document
