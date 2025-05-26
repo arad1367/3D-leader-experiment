@@ -570,6 +570,80 @@
           </p>
         </div>
 
+        <!-- NEW CONSENT FORM SECTION -->
+        <div class="character-info" style="padding: 15px; margin-bottom: 15px">
+          <h2 style="margin-bottom: 15px; font-size: 18px">Consent</h2>
+
+          <p style="margin-bottom: 15px; font-size: 14px">I confirm that:</p>
+
+          <ul
+            style="
+              margin-bottom: 20px;
+              padding-left: 20px;
+              font-size: 14px;
+              line-height: 1.6;
+            "
+          >
+            <li style="margin-bottom: 8px">
+              I have read and understood the information provided in this
+              consent form.
+            </li>
+            <li style="margin-bottom: 8px">
+              I voluntarily agree to participate in this study.
+            </li>
+            <li style="margin-bottom: 8px">
+              I understand that I can withdraw from the study at any time
+              without penalty or negative consequences.
+            </li>
+          </ul>
+
+          <div style="margin-bottom: 15px">
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+                cursor: pointer;
+                font-size: 14px;
+              "
+            >
+              <input
+                type="radio"
+                name="consent"
+                value="yes"
+                id="consentYes"
+                style="margin-right: 8px"
+              />
+              I consent to participate
+            </label>
+
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                font-size: 14px;
+              "
+            >
+              <input
+                type="radio"
+                name="consent"
+                value="no"
+                id="consentNo"
+                style="margin-right: 8px"
+              />
+              I do not consent to participate
+            </label>
+          </div>
+
+          <p
+            style="color: red; display: none; font-size: 14px"
+            id="consentError"
+          >
+            Please select your consent choice before continuing
+          </p>
+        </div>
+
         <div class="confirmation-box" style="padding: 8px; margin-top: 10px">
           <button
             class="next-button"
@@ -581,6 +655,62 @@
         </div>
       </div>
     </div>
+
+    <!-- NEW: Consent Declined Page -->
+    <div id="consentDeclinedPage" class="page">
+      <div class="container">
+        <header style="margin-bottom: 20px">
+          <h1 style="margin-bottom: 0; font-size: 24px">
+            Thank You for Your Consideration
+          </h1>
+        </header>
+
+        <div
+          class="character-info"
+          style="padding: 25px; margin-bottom: 20px; text-align: center"
+        >
+          <h2
+            style="
+              margin-bottom: 20px;
+              font-size: 20px;
+              color: var(--secondary-color);
+            "
+          >
+            Study Participation Declined
+          </h2>
+
+          <p style="margin-bottom: 15px; font-size: 16px; line-height: 1.6">
+            Thank you for taking the time to consider participating in our
+            research study.
+          </p>
+
+          <p style="margin-bottom: 15px; font-size: 16px; line-height: 1.6">
+            Since you have chosen not to consent to participation, the
+            experiment will not continue. This decision will not affect you in
+            any way, and we respect your choice.
+          </p>
+
+          <p style="margin-bottom: 20px; font-size: 16px; line-height: 1.6">
+            You may now close this window or return to Prolific.
+          </p>
+
+          <div style="margin-top: 30px">
+            <button
+              class="next-button"
+              onclick="window.close()"
+              style="
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: var(--secondary-color);
+              "
+            >
+              Close Window
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Page 1: Pre-Interaction Survey -->
     <div id="page1" class="page">
       <div class="container">
@@ -849,14 +979,37 @@
               return;
             }
 
+            // Check consent selection
+            const consentYes = document.getElementById("consentYes").checked;
+            const consentNo = document.getElementById("consentNo").checked;
+
+            if (!consentYes && !consentNo) {
+              document.getElementById("consentError").style.display = "block";
+              return;
+            }
+
+            // Hide error messages
+            document.getElementById("prolificIdError").style.display = "none";
+            document.getElementById("consentError").style.display = "none";
+
             // Store the Prolific ID
             prolificId = inputValue;
             localStorage.setItem("prolificId", prolificId);
 
-            // Hide error message if it was shown
-            document.getElementById("prolificIdError").style.display = "none";
+            // Check consent choice
+            if (consentNo) {
+              // User declined consent - show finish page
+              document
+                .getElementById("prolificIdPage")
+                .classList.remove("active");
+              document
+                .getElementById("consentDeclinedPage")
+                .classList.add("active");
+              window.scrollTo(0, 0);
+              return;
+            }
 
-            // Move to the pre-interaction survey page
+            // User consented - continue to pre-interaction survey page
             document
               .getElementById("prolificIdPage")
               .classList.remove("active");
