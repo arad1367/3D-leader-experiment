@@ -263,18 +263,32 @@
       /* ===== INTERACTION CONTAINER ===== */
       .interaction-container {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap: 20px;
         margin-bottom: 30px;
       }
 
+      .bottom-section {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+      }
+
       @media (max-width: 768px) {
-        .interaction-container {
+        .bottom-section {
           flex-direction: column;
         }
       }
 
-      .chatbot-container,
+      .chatbot-container {
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        height: 600px;
+        transition: var(--transition);
+      }
+
       .email-container {
         flex: 1;
         border-radius: 8px;
@@ -282,6 +296,12 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         height: 600px;
         transition: var(--transition);
+      }
+
+      .task-info-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
       }
 
       .chatbot-container {
@@ -548,7 +568,7 @@
       <div class="container">
         <header style="margin-bottom: 10px">
           <h1 style="margin-bottom: 0; font-size: 24px">
-            Exploring 3D Chatbot Interaction: A Research Study
+            Exploring 3D AI Assistant Interaction: A Research Study
           </h1>
         </header>
 
@@ -570,69 +590,61 @@
           </p>
         </div>
 
-        <!-- NEW CONSENT FORM SECTION -->
+        <!-- CONSENT FORM SECTION -->
         <div class="character-info" style="padding: 15px; margin-bottom: 15px">
-          <h2 style="margin-bottom: 15px; font-size: 18px">Consent</h2>
+          <h2 style="margin-bottom: 15px; font-size: 18px">
+            Consent to Participate
+          </h2>
 
-          <p style="margin-bottom: 15px; font-size: 14px">I confirm that:</p>
+          <p style="margin-bottom: 15px; font-size: 14px; line-height: 1.6">
+            Although the study will not benefit you directly, we hope the
+            information we learn will help improve the design of idea evaluation
+            platforms for improved idea selection in the future.
+          </p>
 
-          <ul
-            style="
-              margin-bottom: 20px;
-              padding-left: 20px;
-              font-size: 14px;
-              line-height: 1.6;
-            "
-          >
-            <li style="margin-bottom: 8px">
-              I have read and understood the information provided in this
-              consent form.
-            </li>
-            <li style="margin-bottom: 8px">
-              I voluntarily agree to participate in this study.
-            </li>
-            <li style="margin-bottom: 8px">
-              I understand that I can withdraw from the study at any time
-              without penalty or negative consequences.
-            </li>
-          </ul>
+          <p style="margin-bottom: 15px; font-size: 14px; line-height: 1.6">
+            The risks associated with participating in this study are no greater
+            than those encountered in daily life. There is a potential risk of
+            loss of confidentiality. Please do not include any sensitive or
+            identifying information in the open question fields.
+          </p>
+
+          <p style="margin-bottom: 15px; font-size: 14px; line-height: 1.6">
+            We will collect data from you, including responses to the survey
+            questions and your evaluation choices. We do not collect sensitive
+            data. This data will be used to conduct statistical analyses and to
+            publish the research findings in academic journals.
+          </p>
+
+          <p style="margin-bottom: 15px; font-size: 14px; line-height: 1.6">
+            For your time and effort, you will be compensated. Participants who
+            fail the attention check may be disqualified without compensation.
+          </p>
+
+          <p style="margin-bottom: 15px; font-size: 14px; line-height: 1.6">
+            If you have any questions, concerns, or feedback related to this
+            study, please contact us.
+          </p>
 
           <div style="margin-bottom: 15px">
             <label
               style="
                 display: flex;
-                align-items: center;
-                margin-bottom: 10px;
+                align-items: flex-start;
                 cursor: pointer;
                 font-size: 14px;
+                line-height: 1.5;
               "
             >
               <input
-                type="radio"
-                name="consent"
-                value="yes"
-                id="consentYes"
-                style="margin-right: 8px"
+                type="checkbox"
+                id="consentCheckbox"
+                style="margin-right: 10px; margin-top: 2px; min-width: 16px"
               />
-              I consent to participate
-            </label>
-
-            <label
-              style="
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-                font-size: 14px;
-              "
-            >
-              <input
-                type="radio"
-                name="consent"
-                value="no"
-                id="consentNo"
-                style="margin-right: 8px"
-              />
-              I do not consent to participate
+              <span
+                >I have read and understood the information above, and I
+                voluntarily consent to participate in this research study.</span
+              >
             </label>
           </div>
 
@@ -640,7 +652,7 @@
             style="color: red; display: none; font-size: 14px"
             id="consentError"
           >
-            Please select your consent choice before continuing
+            Please check the consent box before continuing
           </p>
         </div>
 
@@ -656,84 +668,20 @@
       </div>
     </div>
 
-    <!-- NEW: Consent Declined Page -->
-    <div id="consentDeclinedPage" class="page">
-      <div class="container">
-        <header style="margin-bottom: 20px">
-          <h1 style="margin-bottom: 0; font-size: 24px">
-            Thank You for Your Consideration
-          </h1>
-        </header>
-
-        <div
-          class="character-info"
-          style="padding: 25px; margin-bottom: 20px; text-align: center"
-        >
-          <h2
-            style="
-              margin-bottom: 20px;
-              font-size: 20px;
-              color: var(--secondary-color);
-            "
-          >
-            Study Participation Declined
-          </h2>
-
-          <p style="margin-bottom: 15px; font-size: 16px; line-height: 1.6">
-            Thank you for taking the time to consider participating in our
-            research study.
-          </p>
-
-          <p style="margin-bottom: 15px; font-size: 16px; line-height: 1.6">
-            Since you have chosen not to consent to participation, the
-            experiment will not continue. This decision will not affect you in
-            any way, and we respect your choice.
-          </p>
-
-          <p style="margin-bottom: 20px; font-size: 16px; line-height: 1.6">
-            You may now close this window or return to Prolific.
-          </p>
-
-          <div style="margin-top: 30px">
-            <button
-              class="next-button"
-              onclick="window.close()"
-              style="
-                padding: 10px 20px;
-                font-size: 16px;
-                background-color: var(--secondary-color);
-              "
-            >
-              Close Window
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Page 1: Pre-Interaction Survey -->
     <div id="page1" class="page">
       <div class="container">
         <header style="margin-bottom: 10px">
           <h1 style="margin-bottom: 0; font-size: 24px">
-            Exploring 3D Chatbot Interaction: A Research Study
+            Exploring 3D AI Assistant Interaction: A Research Study
           </h1>
         </header>
 
         <!-- REPLACED: Warning message instead of checkbox -->
         <div class="warning-message" id="preWarningMessage">
           Please ensure that you have clicked the "Submit" button on the Google
-          Form. Once submitted, you may then click the button below.
-        </div>
-        <div class="confirmation-box" style="margin-bottom: 10px; padding: 8px">
-          <button
-            class="next-button"
-            id="nextButton1"
-            style="padding: 6px 15px; font-size: 14px"
-          >
-            I Completed Pre-Interaction Survey and clicked the "Submit" button
-            of google form.
-          </button>
+          Form. Once submitted, you may then click the button at the bottom of
+          the page.
         </div>
 
         <!-- UPDATED: Reduced height of iframe -->
@@ -748,11 +696,91 @@
             >Loading…</iframe
           >
         </div>
+
+        <div class="confirmation-box" style="margin-top: 10px; padding: 8px">
+          <button
+            class="next-button"
+            id="nextButton1"
+            style="padding: 6px 15px; font-size: 14px"
+          >
+            I Completed Pre-Interaction Survey and clicked the "Submit" button
+            of google form.
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- Page 1.5: Character Assignment Page -->
     <div id="characterPage" class="page">
+      <div class="container">
+        <header style="margin-bottom: 10px">
+          <h1 style="margin-bottom: 0; font-size: 24px">Task instruction</h1>
+        </header>
+
+        <div class="character-info" style="padding: 15px; margin-bottom: 15px">
+          <h2 style="margin-bottom: 15px; font-size: 18px">
+            About AI Assistant
+          </h2>
+
+          <p style="margin-bottom: 15px; font-size: 14px; line-height: 1.6">
+            <strong
+              >Your task is to compose an email with the help of an
+              AI-Assistant.</strong
+            >
+            You can use the AI-Assistant as you would use any other
+            conversational AI tools. For example, you can ask questions or
+            discuss the team situation.
+          </p>
+
+          <p style="margin-bottom: 15px; font-size: 14px; line-height: 1.6">
+            Generative AI assistants can understand natural language and respond
+            in a conversational manner. You can interact with the 3D AI
+            assistant using text input or by using the microphone button for
+            voice input.
+          </p>
+
+          <div style="margin-bottom: 15px">
+            <label
+              style="
+                display: flex;
+                align-items: flex-start;
+                cursor: pointer;
+                font-size: 14px;
+                line-height: 1.5;
+              "
+            >
+              <input
+                type="checkbox"
+                id="taskInstructionCheckbox"
+                style="margin-right: 10px; margin-top: 2px; min-width: 16px"
+              />
+              <span>I have read and understood the task instructions.</span>
+            </label>
+          </div>
+
+          <p
+            style="color: red; display: none; font-size: 14px"
+            id="taskInstructionError"
+          >
+            Please check the box to confirm you have read the instructions
+          </p>
+        </div>
+
+        <div class="confirmation-box" style="padding: 8px; margin-top: 10px">
+          <button
+            class="next-button"
+            id="nextButtonCharacter"
+            style="padding: 6px 15px; font-size: 14px"
+            disabled
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 1.6: Transformational Character Explanation -->
+    <div id="transformationalPage" class="page">
       <div class="container">
         <header style="margin-bottom: 10px">
           <h1 style="margin-bottom: 0; font-size: 24px">
@@ -762,42 +790,134 @@
 
         <div class="character-info" style="padding: 15px; margin-bottom: 15px">
           <h2 style="margin-bottom: 10px; font-size: 20px">
-            You will be interacting with a
-            <span id="characterTypeDisplay">Transformational</span> AI Assistant
+            You will be interacting with a Transformational AI Assistant
           </h2>
 
           <div
             class="character-description"
-            id="characterDescription"
             style="margin-bottom: 15px; padding: 10px"
           >
-            <!-- This content will be populated by JavaScript -->
+            This AI assistant has a transformational leadership style, meaning
+            the assistant shows modesty, a focus on others' needs, and a strong
+            sense of empathy. The AI assistant is genuinely interested in
+            empowering others to grow and perform better.<br /><br />
+            The AI assistant uses automatic voice and text recognition to
+            understand what you say. Complex algorithms then analyze your
+            message and generate a response.<br /><br />
+            The AI assistant's facial expressions, gestures, and outfit are
+            carefully designed to bring the transformational style to life. They
+            change depending on the response, making the transformational style
+            even more vivid and noticeable for you.
           </div>
 
-          <div class="ai-info" style="margin-top: 15px; padding-top: 10px">
-            <h3 style="margin-bottom: 5px; font-size: 16px">
-              About Conversational AI
-            </h3>
-            <p style="margin-bottom: 10px; font-size: 14px">
-              Generative AI assistants can understand natural language and
-              respond in a conversational manner. You can interact with the 3D
-              AI assistant using text input or by using the microphone button
-              for voice input.
-            </p>
-            <p style="margin-bottom: 10px; font-size: 14px">
-              Your task is to compose an email with the help of an AI-Assistant.
-              You can use the AI-Assistant as you would use any other
-              conversational AI tools. For example, you can ask questions or
-              discuss the team situation
-            </p>
+          <div style="margin-bottom: 15px">
+            <label
+              style="
+                display: flex;
+                align-items: flex-start;
+                cursor: pointer;
+                font-size: 14px;
+                line-height: 1.5;
+              "
+            >
+              <input
+                type="checkbox"
+                id="transformationalCheckbox"
+                style="margin-right: 10px; margin-top: 2px; min-width: 16px"
+              />
+              <span
+                >I have read and understood the AI assistant information.</span
+              >
+            </label>
           </div>
+
+          <p
+            style="color: red; display: none; font-size: 14px"
+            id="transformationalError"
+          >
+            Please check the box to confirm you have read the information
+          </p>
         </div>
 
         <div class="confirmation-box" style="padding: 8px; margin-top: 10px">
           <button
             class="next-button"
-            id="nextButtonCharacter"
+            id="nextButtonTransformational"
             style="padding: 6px 15px; font-size: 14px"
+            disabled
+          >
+            I Understand - Continue to the Interaction
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 1.7: DarkAgent Character Explanation -->
+    <div id="darkAgentPage" class="page">
+      <div class="container">
+        <header style="margin-bottom: 10px">
+          <h1 style="margin-bottom: 0; font-size: 24px">
+            Your AI Assistant Experience
+          </h1>
+        </header>
+
+        <div class="character-info" style="padding: 15px; margin-bottom: 15px">
+          <h2 style="margin-bottom: 10px; font-size: 20px">
+            You will be interacting with a DarkAgent AI Assistant
+          </h2>
+
+          <div
+            class="character-description"
+            style="margin-bottom: 15px; padding: 10px"
+          >
+            This AI assistant has a dark leadership style, showing narcissistic
+            and machiavellian traits. The AI assistant displays grandiosity,
+            craves admiration, and lacks empathy. The AI assistant is mainly
+            interested in itself, sometimes at the expense of others.<br /><br />
+            The AI assistant uses automatic voice and text recognition to
+            understand what you say. Complex algorithms then analyze your
+            message and generate a response.<br /><br />
+            The AI assistant's facial expressions, gestures, and outfit are
+            carefully designed to bring the dark style to life. They change
+            depending on the response, making the dark style even more vivid and
+            noticeable for you.
+          </div>
+
+          <div style="margin-bottom: 15px">
+            <label
+              style="
+                display: flex;
+                align-items: flex-start;
+                cursor: pointer;
+                font-size: 14px;
+                line-height: 1.5;
+              "
+            >
+              <input
+                type="checkbox"
+                id="darkAgentCheckbox"
+                style="margin-right: 10px; margin-top: 2px; min-width: 16px"
+              />
+              <span
+                >I have read and understood the AI assistant information.</span
+              >
+            </label>
+          </div>
+
+          <p
+            style="color: red; display: none; font-size: 14px"
+            id="darkAgentError"
+          >
+            Please check the box to confirm you have read the information
+          </p>
+        </div>
+
+        <div class="confirmation-box" style="padding: 8px; margin-top: 10px">
+          <button
+            class="next-button"
+            id="nextButtonDarkAgent"
+            style="padding: 6px 15px; font-size: 14px"
+            disabled
           >
             I Understand - Continue to the Interaction
           </button>
@@ -812,24 +932,6 @@
           <h1>3D Chatbot Interaction Task</h1>
         </header>
 
-        <div class="task-description">
-          <p>
-            <strong>Task description:</strong> You work in a team with four
-            other human teammates. One of the teammates does not contribute
-            anything to the project but always takes credit. You already tried
-            to talk to the teammate, but the behavior did not change. You now
-            want to complain to the team leader by writing an e-mail.
-          </p>
-          <p>
-            <strong>Task duration:</strong> You should spend 7-13 minutes on
-            this task.
-          </p>
-          <div class="timer-container">
-            <span>Time elapsed:</span>
-            <span id="timer" class="timer">0:00</span>
-          </div>
-        </div>
-
         <div class="interaction-container">
           <div class="chatbot-container">
             <iframe
@@ -839,25 +941,48 @@
             ></iframe>
           </div>
 
-          <div class="email-container">
-            <h3>Email Scratchpad</h3>
-            <form class="email-form">
-              <input
-                type="text"
-                placeholder="To: team.leader@company.com"
-                readonly
-                style="background-color: #f0f0f0; cursor: not-allowed"
-              />
-              <input type="text" placeholder="Subject:" id="emailSubject" />
-              <textarea
-                id="emailBody"
-                placeholder="Compose your email to the team leader here..."
-              ></textarea>
-
-              <div class="button-group">
-                <button type="button" id="sendEmail">Send Email</button>
+          <div class="bottom-section">
+            <div class="task-info-section">
+              <div class="task-description">
+                <p>
+                  <strong>Task description:</strong> You work in a team with
+                  four other human teammates. One of the teammates does not
+                  contribute anything to the project but always takes credit.
+                  You already tried to talk to the teammate, but the behavior
+                  did not change. You now want to complain to the team leader by
+                  writing an e-mail.
+                </p>
+                <p>
+                  <strong>Task duration:</strong> You should spend 5-10 minutes
+                  on this task.
+                </p>
+                <div class="timer-container">
+                  <span>Time elapsed:</span>
+                  <span id="timer" class="timer">0:00</span>
+                </div>
               </div>
-            </form>
+            </div>
+
+            <div class="email-container">
+              <h3>Email Scratchpad</h3>
+              <form class="email-form">
+                <input
+                  type="text"
+                  placeholder="To: team.leader@company.com"
+                  readonly
+                  style="background-color: #f0f0f0; cursor: not-allowed"
+                />
+                <input type="text" placeholder="Subject:" id="emailSubject" />
+                <textarea
+                  id="emailBody"
+                  placeholder="Compose your email to the team leader here..."
+                ></textarea>
+
+                <div class="button-group">
+                  <button type="button" id="sendEmail">Send Email</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
 
@@ -912,7 +1037,7 @@
         <!-- Reduce spacing around the header -->
         <header style="margin-bottom: 10px">
           <h1 style="margin-bottom: 0; font-size: 24px">
-            Exploring 3D Chatbot Interaction: A Research Study
+            Exploring 3D AI Assistant Interaction: A Research Study
           </h1>
         </header>
 
@@ -948,6 +1073,7 @@
 
       // Character selection and storage logic
       let selectedCharacter = "";
+      let showExplanation = false;
       const characterTypes = ["darkAgent", "transformational"];
       const characterDescriptions = {
         darkAgent:
@@ -979,11 +1105,11 @@
               return;
             }
 
-            // Check consent selection
-            const consentYes = document.getElementById("consentYes").checked;
-            const consentNo = document.getElementById("consentNo").checked;
+            // Check consent checkbox
+            const consentChecked =
+              document.getElementById("consentCheckbox").checked;
 
-            if (!consentYes && !consentNo) {
+            if (!consentChecked) {
               document.getElementById("consentError").style.display = "block";
               return;
             }
@@ -995,19 +1121,6 @@
             // Store the Prolific ID
             prolificId = inputValue;
             localStorage.setItem("prolificId", prolificId);
-
-            // Check consent choice
-            if (consentNo) {
-              // User declined consent - show finish page
-              document
-                .getElementById("prolificIdPage")
-                .classList.remove("active");
-              document
-                .getElementById("consentDeclinedPage")
-                .classList.add("active");
-              window.scrollTo(0, 0);
-              return;
-            }
 
             // User consented - continue to pre-interaction survey page
             document
@@ -1046,19 +1159,31 @@
 
       // Randomly select a character when the page loads
       // Function to select a random character
+      // Function to select random character and explanation status
       function selectRandomCharacter() {
-        const randomIndex = Math.floor(Math.random() * characterTypes.length);
-        selectedCharacter = characterTypes[randomIndex];
+        // 4 possible combinations (25% each)
+        const combinations = [
+          { character: "transformational", explanation: true },
+          { character: "transformational", explanation: false },
+          { character: "darkAgent", explanation: true },
+          { character: "darkAgent", explanation: false },
+        ];
+
+        const randomIndex = Math.floor(Math.random() * combinations.length);
+        const selected = combinations[randomIndex];
+
+        selectedCharacter = selected.character;
+        showExplanation = selected.explanation;
+
         localStorage.setItem("selectedCharacter", selectedCharacter);
+        localStorage.setItem("showExplanation", showExplanation.toString());
 
-        // Update the display on the character page
-        document.getElementById("characterTypeDisplay").textContent =
-          selectedCharacter.charAt(0).toUpperCase() +
-          selectedCharacter.slice(1);
-        document.getElementById("characterDescription").innerHTML =
-          characterDescriptions[selectedCharacter].replace(/\n/g, "<br>");
-
-        console.log("Randomly selected character:", selectedCharacter);
+        console.log(
+          "Randomly selected:",
+          selectedCharacter,
+          "with explanation:",
+          showExplanation
+        );
 
         // Update the form URLs with the selected character and Prolific ID
         updateFormUrls();
@@ -1070,6 +1195,9 @@
 
         // No need to disable the button since we removed the checkbox
         document.getElementById("nextButton1").disabled = false;
+
+        // Task instruction button starts disabled
+        document.getElementById("nextButtonCharacter").disabled = true;
       });
 
       // Store all sent emails
@@ -1087,11 +1215,36 @@
       document
         .getElementById("nextButtonCharacter")
         .addEventListener("click", function () {
+          const taskCheckbox = document.getElementById(
+            "taskInstructionCheckbox"
+          ).checked;
+
+          if (!taskCheckbox) {
+            document.getElementById("taskInstructionError").style.display =
+              "block";
+            return;
+          }
+
+          document.getElementById("taskInstructionError").style.display =
+            "none";
           document.getElementById("characterPage").classList.remove("active");
-          document.getElementById("page2").classList.add("active");
+
+          // Navigate based on character and explanation status
+          if (showExplanation) {
+            if (selectedCharacter === "transformational") {
+              document
+                .getElementById("transformationalPage")
+                .classList.add("active");
+            } else {
+              document.getElementById("darkAgentPage").classList.add("active");
+            }
+          } else {
+            // Skip explanation, go directly to interaction
+            document.getElementById("page2").classList.add("active");
+            startTimer();
+          }
+
           window.scrollTo(0, 0);
-          // Start the timer when moving to page 2
-          startTimer();
         });
 
       document
@@ -1102,6 +1255,72 @@
           window.scrollTo(0, 0);
           // Stop the timer when moving to page 3
           stopTimer();
+        });
+
+      // Task instruction checkbox handler
+      document
+        .getElementById("taskInstructionCheckbox")
+        .addEventListener("change", function () {
+          const isChecked = this.checked;
+          document.getElementById("nextButtonCharacter").disabled = !isChecked;
+        });
+
+      // Transformational page handlers
+      document
+        .getElementById("transformationalCheckbox")
+        .addEventListener("change", function () {
+          const isChecked = this.checked;
+          document.getElementById("nextButtonTransformational").disabled =
+            !isChecked;
+        });
+
+      document
+        .getElementById("nextButtonTransformational")
+        .addEventListener("click", function () {
+          const transformationalCheckbox = document.getElementById(
+            "transformationalCheckbox"
+          ).checked;
+
+          if (!transformationalCheckbox) {
+            document.getElementById("transformationalError").style.display =
+              "block";
+            return;
+          }
+
+          document.getElementById("transformationalError").style.display =
+            "none";
+          document
+            .getElementById("transformationalPage")
+            .classList.remove("active");
+          document.getElementById("page2").classList.add("active");
+          window.scrollTo(0, 0);
+          startTimer();
+        });
+
+      // DarkAgent page handlers
+      document
+        .getElementById("darkAgentCheckbox")
+        .addEventListener("change", function () {
+          const isChecked = this.checked;
+          document.getElementById("nextButtonDarkAgent").disabled = !isChecked;
+        });
+
+      document
+        .getElementById("nextButtonDarkAgent")
+        .addEventListener("click", function () {
+          const darkAgentCheckbox =
+            document.getElementById("darkAgentCheckbox").checked;
+
+          if (!darkAgentCheckbox) {
+            document.getElementById("darkAgentError").style.display = "block";
+            return;
+          }
+
+          document.getElementById("darkAgentError").style.display = "none";
+          document.getElementById("darkAgentPage").classList.remove("active");
+          document.getElementById("page2").classList.add("active");
+          window.scrollTo(0, 0);
+          startTimer();
         });
 
       // Function to update the Google Form URL with the character
@@ -1177,7 +1396,7 @@
       let seconds = 0;
       const timerDisplay = document.getElementById("timer");
       // Set the time limit for the task (1 minute for testing)
-      const TIME_LIMIT = 300; // 5 minute in seconds
+      const TIME_LIMIT = 1200; // 20 minute in seconds
 
       function startTimer() {
         // Reset timer
@@ -1188,6 +1407,13 @@
         timerInterval = setInterval(function () {
           seconds++;
           updateTimerDisplay();
+
+          // Show warning 1 minute before time limit (at 19 minutes)
+          if (seconds === TIME_LIMIT - 60) {
+            alert(
+              "⏰ Warning: You have 1 minute left! The task will automatically proceed to the next page when time is up."
+            );
+          }
 
           // Check if time limit reached
           if (seconds >= TIME_LIMIT) {
